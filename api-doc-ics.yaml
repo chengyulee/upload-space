@@ -1,0 +1,99 @@
+openapi: "3.0.2"
+info:
+  title: ics APIs
+  version: "1.0"
+  description: This is api sample for ics.
+  contact:
+    email: lixchengyu@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: http://localhost:8080/ics
+    description: Development server
+  - url: https://localhost:8080/ics
+    description: Production server
+tags:
+  - name: ticket
+    description: Everything about ticket API
+  - name: test tag
+    description: test tag description
+
+paths:
+  /ticket/column-name.json:
+    post:
+      tags:
+        - ticket
+      summary: get all ticket column name
+      description: column object and name mapping
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneralResponse"
+              example:
+                $ref: "#/components/examples/TickeTColumnNameExample"
+
+components:
+  schemas:
+    GeneralResponse:
+      type: object
+      properties:
+        result:
+          type: object
+          properties:
+            status:
+              type: string
+            datas:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                returnMsg:
+                  type: string
+                errMsg:
+                  type: string
+                errCode:
+                  type: string
+                datas:
+                  type: array
+    GeneralError:
+      type: object
+      properties:
+        errMsg:
+          type: string
+          example: "123"
+  examples:
+    TickeTColumnNameExample:
+      value:
+        result:
+          status: "200"
+          datas:
+            success: true
+            returnMsg: null
+            errMsg: null
+            errCode: null
+            datas:
+              [
+                { "name": "確認日期", "value": "confirmDate" },
+                { "name": "資產編號", "value": "assetId" },
+                { "name": "上級單位4", "value": "baseGroupU4" },
+                { "name": "資產備註2", "value": "assetNote2" },
+                { "name": "上級單位3", "value": "baseGroupU3" },
+                { "name": "資產備註3", "value": "assetNote3" },
+              ]
+  responses:
+    GeneralError:
+      description: General Error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GeneralError"
