@@ -16,8 +16,6 @@ servers:
 tags:
   - name: ticket
     description: Everything about ticket API
-  - name: test tag
-    description: test tag description
 
 paths:
   /ticket/column-name.json:
