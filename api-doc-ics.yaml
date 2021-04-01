@@ -16,6 +16,8 @@ servers:
 tags:
   - name: ticket
     description: Everything about ticket API
+  - name: group
+    description: Everything about group API
 
 paths:
   /ticket/column-name.json:
@@ -67,6 +69,32 @@ paths:
                 $ref: "#/components/schemas/GeneralResponse"
               example:
                 $ref: "#/components/examples/OpenTicketResExample"
+  /group/getAllGroup.json:
+    post:
+      tags:
+        - group
+      summary: get all group
+      description: get all group
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                productType:
+                  description: product type code
+                  type: string
+                  enum:
+                    - PRODUCT_TYPE_RAPID7
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneralResponse"
+              example:
+                $ref: "#/components/examples/GetAllGroupResExample"
 
 components:
   schemas:
@@ -376,6 +404,33 @@ components:
             errMsg: null
             errCode: null
             datas: null
+    GetAllGroupResExample:
+      value:
+        result:
+          status: "200"
+          datas:
+            success: true
+            returnMsg: null
+            errMsg: null
+            errCode: null
+            datas:
+              [
+                {
+                  "id": "c37a68b0-0ddb-4ce0-9c64-a8427da991ea",
+                  "uid": "00A",
+                  "name": "資安處",
+                },
+                {
+                  "id": "b54eb42c-7750-401f-9549-3c2db623547a",
+                  "uid": "00A4",
+                  "name": "資安部",
+                },
+                {
+                  "id": "b54eb42c-7750-401f-9549-3c2db62354aa",
+                  "uid": "00A401",
+                  "name": "資安科",
+                },
+              ]
   responses:
     GeneralError:
       description: General Error
