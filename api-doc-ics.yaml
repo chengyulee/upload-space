@@ -33,6 +33,23 @@ paths:
                 $ref: "#/components/schemas/GeneralResponse"
               example:
                 $ref: "#/components/examples/TicketColumnNameResExample"
+  /ticket/getTicket.json:
+    post:
+      tags:
+        - ticket
+      summary: get all opened ticket
+      description: get all opened ticket
+      requestBody:
+        $ref: "#/components/requestBodies/GetTicketBody"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneralResponse"
+              example:
+                $ref: "#/components/examples/GetTicketResExample"
   /ticket/openTicket.json:
     post:
       tags:
@@ -80,6 +97,58 @@ components:
         errMsg:
           type: string
           example: "123"
+    OperatorRequest:
+      type: object
+      properties:
+        code:
+          description: filter column name
+          type: string
+        value:
+          description: filter value
+          nullable: true
+          type: string
+        values:
+          description: filter value if has multiple value
+          nullable: true
+          type: array
+          items:
+            type: string
+        operator:
+          description: operator symbol
+          nullable: true
+          type: string
+          enum:
+            - "="
+            - ">="
+            - "<="
+            - "LIKE"
+            - null
+    GetTicketRequest:
+      type: object
+      properties:
+        orderBy:
+          type: string
+          description: ordey by column object name
+        desc:
+          type: boolean
+          description: descended or not
+        offset:
+          type: integer
+          description: current page count of pages
+        recordOfEachPage:
+          type: integer
+          description: row count of each page
+        filters:
+          type: array
+          description: column filter
+          items:
+            $ref: "#/components/schemas/OperatorRequest"
+        awaitCheck:
+          type: boolean
+          description: only get await check tickets
+        enableHistory:
+          type: boolean
+          description: search history tickets or not
     OpenTicketRequest:
       type: object
       properties:
@@ -87,8 +156,10 @@ components:
           type: string
           format: binary
           nullable: true
+          description: "file to upload"
         request:
           type: object
+          description: "ticket parameters"
           properties:
             cmId:
               type: string
@@ -187,6 +258,12 @@ components:
         application/json:
           schema:
             nullable: true
+    GetTicketBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetTicketRequest"
     OpenTicketBody:
       required: true
       content:
@@ -212,6 +289,76 @@ components:
                 { "name": "資產備註2", "value": "assetNote2" },
                 { "name": "上級單位3", "value": "baseGroupU3" },
                 { "name": "資產備註3", "value": "assetNote3" },
+              ]
+    GetTicketResExample:
+      value:
+        result:
+          status: "200"
+          datas:
+            success: true
+            returnMsg: null
+            errMsg: null
+            errCode: null
+            datas:
+              [
+                {
+                  "id": "AA202104010004",
+                  "sync": "TRUE",
+                  "assetId": null,
+                  "assetEnv": null,
+                  "assetCate": null,
+                  "assetUsage": null,
+                  "networkCate": null,
+                  "ip": "6.6.6.6",
+                  "softwareAddress": null,
+                  "port": "13",
+                  "description": null,
+                  "location": null,
+                  "hostname": null,
+                  "empId": "000000(USER_000000)",
+                  "os": null,
+                  "baseGroup": "00E(資訊處)",
+                  "baseGroupU1": null,
+                  "baseGroupU2": null,
+                  "baseGroupU3": null,
+                  "baseGroupU4": null,
+                  "changeCause": null,
+                  "manageEmpId": null,
+                  "registerDate": null,
+                  "confirmDate": null,
+                  "assetValuationC": "0",
+                  "assetValuationI": "0",
+                  "assetValuationA": "0",
+                  "assetAssessmentTl": "2",
+                  "assetAssessmentFl": "1",
+                  "assetAssessmentAl": "1",
+                  "assetNote1": null,
+                  "assetNote2": null,
+                  "assetNote3": null,
+                  "assetNote4": null,
+                  "assetNote5": null,
+                  "createDate": "2021-04-01 13:05:21",
+                  "createUser": "000000(USER_000000)",
+                  "updateDate": "2021-04-01 13:05:21",
+                  "updateUser": "000000(USER_000000)",
+                  "empExt": "000",
+                  "noticeEmail": null,
+                  "assetValuation": "0",
+                  "assetAssessment": "2",
+                  "assetRisk": "0",
+                  "sid": 38,
+                  "ticketCate": "工單類別-資產新增",
+                  "ticketStatus": "待審核",
+                  "ticketStatusNote": null,
+                  "product": "Rapid7",
+                  "assetReleaseDate": "2020-09-25 00:00:00",
+                  "assetReleaseDescription": "testttt",
+                  "checkDescription": null,
+                  "curWorkflowApplyId": 32,
+                  "ticketCateCode": "TICKET_CATE_ASSET_ADD",
+                  "productCode": "PRODUCT_TYPE_RAPID7",
+                  "workflowDescription": "add desc.",
+                },
               ]
     OpenTicketResExample:
       value:
