@@ -24,12 +24,6 @@ paths:
         - ticket
       summary: get all ticket column name
       description: column object and name mapping
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              nullable: true
       responses:
         "200":
           description: OK
@@ -38,7 +32,24 @@ paths:
               schema:
                 $ref: "#/components/schemas/GeneralResponse"
               example:
-                $ref: "#/components/examples/TickeTColumnNameExample"
+                $ref: "#/components/examples/TicketColumnNameResExample"
+  /ticket/openTicket.json:
+    post:
+      tags:
+        - ticket
+      summary: open ticket
+      description: open ticket with workflow
+      requestBody:
+        $ref: "#/components/requestBodies/OpenTicketBody"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneralResponse"
+              example:
+                $ref: "#/components/examples/OpenTicketResExample"
 
 components:
   schemas:
@@ -69,8 +80,122 @@ components:
         errMsg:
           type: string
           example: "123"
+    OpenTicketRequest:
+      type: object
+      properties:
+        files:
+          type: string
+          format: binary
+          nullable: true
+        request:
+          type: object
+          properties:
+            cmId:
+              type: string
+            ticketCate:
+              type: string
+              enum:
+                - TICKET_CATE_ASSET_ADD
+                - TICKET_CATE_ASSET_CHANGE
+                - TICKET_CATE_ASSET_DELETE
+            ticketStatusNote:
+              type: string
+            product:
+              type: string
+              enum:
+                - PRODUCT_TYPE_RAPID7
+            ip:
+              type: string
+            sync:
+              type: string
+            assetId:
+              type: string
+            assetEnv:
+              type: string
+            assetCate:
+              type: string
+            assetUsage:
+              type: string
+            networkCate:
+              type: string
+            softwareAddress:
+              type: string
+            port:
+              type: string
+            description:
+              type: string
+            location:
+              type: string
+            hostname:
+              type: string
+            empId:
+              type: string
+            os:
+              type: string
+            baseGroup:
+              type: string
+            baseGroupU1:
+              type: string
+            baseGroupU2:
+              type: string
+            baseGroupU3:
+              type: string
+            baseGroupU4:
+              type: string
+            changeCause:
+              type: string
+            manageEmpId:
+              type: string
+            registerDate:
+              type: string
+            confirmDate:
+              type: string
+            assetValuationC:
+              type: string
+            assetValuationI:
+              type: string
+            assetValuationA:
+              type: string
+            assetAssessmentTl:
+              type: string
+            assetAssessmentFl:
+              type: string
+            assetAssessmentAl:
+              type: string
+            assetNote1:
+              type: string
+            assetNote2:
+              type: string
+            assetNote3:
+              type: string
+            assetNote4:
+              type: string
+            assetNote5:
+              type: string
+            assetReleaseDate:
+              type: string
+            assetReleaseDescription:
+              type: string
+            checkDescription:
+              type: string
+            workflowDescription:
+              type: string
+  requestBodies:
+    NullBody:
+      required: false
+      content:
+        application/json:
+          schema:
+            nullable: true
+    OpenTicketBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/OpenTicketRequest"
+
   examples:
-    TickeTColumnNameExample:
+    TicketColumnNameResExample:
       value:
         result:
           status: "200"
@@ -88,6 +213,16 @@ components:
                 { "name": "上級單位3", "value": "baseGroupU3" },
                 { "name": "資產備註3", "value": "assetNote3" },
               ]
+    OpenTicketResExample:
+      value:
+        result:
+          status: "200"
+          datas:
+            success: true
+            returnMsg: "審核申請成功"
+            errMsg: null
+            errCode: null
+            datas: null
   responses:
     GeneralError:
       description: General Error
