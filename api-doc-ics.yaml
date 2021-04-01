@@ -143,6 +143,12 @@ components:
           description: column filter
           items:
             $ref: "#/components/schemas/OperatorRequest"
+        myTicket:
+          type: boolean
+          description: only get self tickets
+        awaitDeal:
+          type: boolean
+          description: only get await deal tickets
         awaitCheck:
           type: boolean
           description: only get await check tickets
