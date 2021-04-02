@@ -76,12 +76,13 @@ paths:
       summary: get all group
       description: get all group
       requestBody:
-        required: true
+        required: false
         content:
-          application/json:
+          application/json: 
             schema:
               properties:
                 productType:
+                  nullable: true
                   description: product type code
                   type: string
                   enum:
