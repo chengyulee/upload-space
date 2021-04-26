@@ -69,6 +69,23 @@ paths:
                 $ref: "#/components/schemas/GeneralResponse"
               example:
                 $ref: "#/components/examples/OpenTicketResExample"
+  /ticket/getCmFilters.json:
+    post:
+      tags:
+        - ticket
+      summary: get cm ip and port list
+      description: get cm ip and port list for opening ticket
+      requestBody:
+        $ref: "#/components/requestBodies/GetCmFiltersBody"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneralResponse"
+              example:
+                $ref: "#/components/examples/GetCmFiltersResExample"
   /group/getAllGroup.json:
     post:
       tags:
@@ -78,7 +95,7 @@ paths:
       requestBody:
         required: false
         content:
-          application/json: 
+          application/json:
             schema:
               properties:
                 productType:
@@ -286,6 +303,26 @@ components:
               type: string
             workflowDescription:
               type: string
+    GetCmFiltersRequest:
+      type: object
+      properties:
+        product:
+          type: string
+          enum:
+            - PRODUCT_TYPE_RAPID7
+          description: product code
+        ip:
+          type: string
+          description: get port list by ip
+        ips:
+          type: array
+          description: get port list by ip list
+          items:
+            type: string
+          example: ["10.10.10.10", "10.211.55.1"]
+        startWithIp:
+          type: string
+          description: get ip start with this value
   requestBodies:
     NullBody:
       required: false
@@ -305,6 +342,12 @@ components:
         multipart/form-data:
           schema:
             $ref: "#/components/schemas/OpenTicketRequest"
+    GetCmFiltersBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetCmFiltersRequest"
 
   examples:
     TicketColumnNameResExample:
@@ -405,6 +448,21 @@ components:
             errMsg: null
             errCode: null
             datas: null
+    GetCmFiltersResExample:
+      value:
+        result:
+          status: "200"
+          datas:
+            success: true
+            returnMsg: null
+            errMsg: null
+            errCode: null
+            datas:
+              {
+                "ips": null,
+                "ports": ["1", "2", "3", "443", "5", "8080", "N/A"],
+                "softwareAddresses": null,
+              }
     GetAllGroupResExample:
       value:
         result:
