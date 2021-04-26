@@ -86,6 +86,23 @@ paths:
                 $ref: "#/components/schemas/GeneralResponse"
               example:
                 $ref: "#/components/examples/GetCmFiltersResExample"
+  /ticket/getCmApplyData.json:
+    post:
+      tags:
+        - ticket
+      summary: get cm by ip and port
+      description: get cm ip and port list for opening ticket
+      requestBody:
+        $ref: "#/components/requestBodies/GetCmApplyDataBody"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneralResponse"
+              example:
+                $ref: "#/components/examples/GetCmApplyDataResExample"
   /group/getAllGroup.json:
     post:
       tags:
@@ -143,7 +160,7 @@ components:
         errMsg:
           type: string
           example: "123"
-    OperatorRequest:
+    OperatorBody:
       type: object
       properties:
         code:
@@ -169,7 +186,7 @@ components:
             - "<="
             - "LIKE"
             - null
-    GetTicketRequest:
+    GetTicketBody:
       type: object
       properties:
         orderBy:
@@ -188,7 +205,7 @@ components:
           type: array
           description: column filter
           items:
-            $ref: "#/components/schemas/OperatorRequest"
+            $ref: "#/components/schemas/OperatorBody"
         myTicket:
           type: boolean
           description: only get self tickets
@@ -201,7 +218,7 @@ components:
         enableHistory:
           type: boolean
           description: search history tickets or not
-    OpenTicketRequest:
+    OpenTicketBody:
       type: object
       properties:
         files:
@@ -303,7 +320,7 @@ components:
               type: string
             workflowDescription:
               type: string
-    GetCmFiltersRequest:
+    GetCmFiltersBody:
       type: object
       properties:
         product:
@@ -323,6 +340,26 @@ components:
         startWithIp:
           type: string
           description: get ip start with this value
+    GetCmApplyDataBody:
+      type: object
+      properties:
+        product:
+          type: string
+          enum:
+            - PRODUCT_TYPE_RAPID7
+          description: product code
+        ips:
+          type: array
+          description: ip string list
+          items:
+            type: string
+          example: ["10.10.10.10", "10.211.55.1"]
+        ports:
+          type: array
+          description: port string list
+          items:
+            type: string
+          example: ["1", "2"]
   requestBodies:
     NullBody:
       required: false
@@ -335,19 +372,25 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/GetTicketRequest"
+            $ref: "#/components/schemas/GetTicketBody"
     OpenTicketBody:
       required: true
       content:
         multipart/form-data:
           schema:
-            $ref: "#/components/schemas/OpenTicketRequest"
+            $ref: "#/components/schemas/OpenTicketBody"
     GetCmFiltersBody:
       required: true
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/GetCmFiltersRequest"
+            $ref: "#/components/schemas/GetCmFiltersBody"
+    GetCmApplyDataBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetCmApplyDataBody"
 
   examples:
     TicketColumnNameResExample:
@@ -463,6 +506,130 @@ components:
                 "ports": ["1", "2", "3", "443", "5", "8080", "N/A"],
                 "softwareAddresses": null,
               }
+    GetCmApplyDataResExample:
+      value:
+        result:
+          status: "200"
+          datas:
+            success: true
+            returnMsg: null
+            errMsg: null
+            errCode: null
+            datas:
+              {
+                "existCm": [
+                    {
+                        "id": "0206f2a4-495c-45cd-9ef9-c14141cc5ba5",
+                        "sync": "TRUE",
+                        "assetId": "",
+                        "assetEnv": null,
+                        "assetCate": null,
+                        "assetUsage": null,
+                        "networkCate": null,
+                        "ip": "10.10.10.10",
+                        "softwareAddress": "",
+                        "port": "2",
+                        "description": "",
+                        "location": "",
+                        "hostname": "",
+                        "empId": "000004(USER_000004)",
+                        "os": null,
+                        "baseGroup": "00E40101(資訊組)",
+                        "baseGroupU1": "00E40101M(資訊組主管)",
+                        "baseGroupU2": "00E401(資訊科)",
+                        "baseGroupU3": "00E4(資訊部)",
+                        "baseGroupU4": "00E(資訊處)",
+                        "changeCause": "",
+                        "manageEmpId": "",
+                        "registerDate": null,
+                        "confirmDate": "2021-04-25 17:43:46",
+                        "assetValuationC": "0",
+                        "assetValuationI": "0",
+                        "assetValuationA": "0",
+                        "assetAssessmentTl": "1",
+                        "assetAssessmentFl": "1",
+                        "assetAssessmentAl": "1",
+                        "assetNote1": "",
+                        "assetNote2": "",
+                        "assetNote3": "",
+                        "assetNote4": "",
+                        "assetNote5": "",
+                        "createDate": "2021-04-25 17:32:04",
+                        "createUser": "000000(USER_000000)",
+                        "updateDate": "2021-04-25 17:43:46",
+                        "updateUser": "000000(USER_000000)",
+                        "empExt": "444",
+                        "noticeEmail": null,
+                        "assetValuation": "0",
+                        "assetAssessment": "3",
+                        "assetRisk": "0",
+                        "logId": null,
+                        "logTime": null,
+                        "logType": null,
+                        "logUser": null
+                    },
+                    {
+                        "id": "a6e396ef-aa61-40b9-b5fc-8f69669e36ca",
+                        "sync": "TRUE",
+                        "assetId": null,
+                        "assetEnv": null,
+                        "assetCate": null,
+                        "assetUsage": null,
+                        "networkCate": null,
+                        "ip": "10.10.10.10",
+                        "softwareAddress": null,
+                        "port": "1",
+                        "description": null,
+                        "location": null,
+                        "hostname": null,
+                        "empId": "000003(USER_000003)",
+                        "os": null,
+                        "baseGroup": "00E40101(資訊組)",
+                        "baseGroupU1": "00E40101M(資訊組主管)",
+                        "baseGroupU2": "00E401(資訊科)",
+                        "baseGroupU3": "00E4(資訊部)",
+                        "baseGroupU4": "00E(資訊處)",
+                        "changeCause": null,
+                        "manageEmpId": null,
+                        "registerDate": null,
+                        "confirmDate": "2021-04-25 17:43:52",
+                        "assetValuationC": "0",
+                        "assetValuationI": "0",
+                        "assetValuationA": "0",
+                        "assetAssessmentTl": "2",
+                        "assetAssessmentFl": "1",
+                        "assetAssessmentAl": "1",
+                        "assetNote1": null,
+                        "assetNote2": null,
+                        "assetNote3": null,
+                        "assetNote4": null,
+                        "assetNote5": null,
+                        "createDate": "2021-04-25 17:34:06",
+                        "createUser": "000000(USER_000000)",
+                        "updateDate": "2021-04-25 17:43:52",
+                        "updateUser": "000000(USER_000000)",
+                        "empExt": "333",
+                        "noticeEmail": null,
+                        "assetValuation": "0",
+                        "assetAssessment": "4",
+                        "assetRisk": "0",
+                        "logId": null,
+                        "logTime": null,
+                        "logType": null,
+                        "logUser": null
+                    }
+                ],
+                "nonExistCm": [
+                    {
+                        "ip": "10.211.55.2",
+                        "port": "1"
+                    },
+                    {
+                        "ip": "10.211.55.2",
+                        "port": "2"
+                    }
+                ]
+            }
     GetAllGroupResExample:
       value:
         result:
