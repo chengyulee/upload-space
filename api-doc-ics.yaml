@@ -230,8 +230,6 @@ components:
           type: object
           description: "ticket parameters"
           properties:
-            cmId:
-              type: string
             ticketCate:
               type: string
               enum:
@@ -246,6 +244,12 @@ components:
                 - PRODUCT_TYPE_RAPID7
             ip:
               type: string
+            newIp:
+              type: string
+            port:
+              type: string
+            newPort:
+              type: string
             sync:
               type: string
             assetId:
@@ -259,8 +263,6 @@ components:
             networkCate:
               type: string
             softwareAddress:
-              type: string
-            port:
               type: string
             description:
               type: string
