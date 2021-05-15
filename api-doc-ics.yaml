@@ -18,6 +18,8 @@ tags:
     description: Everything about ticket API
   - name: group
     description: Everything about group API
+  - name: rescan
+    description: Everything about rescan API
 
 paths:
   /ticket/column-name.json:
@@ -39,8 +41,8 @@ paths:
     post:
       tags:
         - ticket
-      summary: get all opened ticket
-      description: get all opened ticket
+      summary: get all ticket
+      description: get all ticket
       requestBody:
         $ref: "#/components/requestBodies/GetTicketBody"
       responses:
@@ -130,6 +132,21 @@ paths:
                 $ref: "#/components/schemas/GeneralResponse"
               example:
                 $ref: "#/components/examples/GetAllGroupResExample"
+  /rescan/settings.json:
+    post:
+      tags:
+        - rescan
+      summary: get scan settings
+      description: get scan settings from scan tool via api
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneralResponse"
+              example:
+                $ref: "#/components/examples/RescanSettingsExample"
 
 components:
   schemas:
@@ -481,6 +498,10 @@ components:
                   "ticketCateCode": "TICKET_CATE_ASSET_ADD",
                   "productCode": "PRODUCT_TYPE_RAPID7",
                   "workflowDescription": "add desc.",
+                  "scheduleTime": "2021-05-19 17:16:48",
+                  "scanName:" : "scan for ticket",
+                  "policyId" : "123-123",
+                  "policyName": "test policy name",
                 },
               ]
     OpenTicketResExample:
@@ -519,119 +540,115 @@ components:
             errCode: null
             datas:
               {
-                "existCm": [
+                "existCm":
+                  [
                     {
-                        "id": "0206f2a4-495c-45cd-9ef9-c14141cc5ba5",
-                        "sync": "TRUE",
-                        "assetId": "",
-                        "assetEnv": null,
-                        "assetCate": null,
-                        "assetUsage": null,
-                        "networkCate": null,
-                        "ip": "10.10.10.10",
-                        "softwareAddress": "",
-                        "port": "2",
-                        "description": "",
-                        "location": "",
-                        "hostname": "",
-                        "empId": "000004(USER_000004)",
-                        "os": null,
-                        "baseGroup": "00E40101(資訊組)",
-                        "baseGroupU1": "00E40101M(資訊組主管)",
-                        "baseGroupU2": "00E401(資訊科)",
-                        "baseGroupU3": "00E4(資訊部)",
-                        "baseGroupU4": "00E(資訊處)",
-                        "changeCause": "",
-                        "manageEmpId": "",
-                        "registerDate": null,
-                        "confirmDate": "2021-04-25 17:43:46",
-                        "assetValuationC": "0",
-                        "assetValuationI": "0",
-                        "assetValuationA": "0",
-                        "assetAssessmentTl": "1",
-                        "assetAssessmentFl": "1",
-                        "assetAssessmentAl": "1",
-                        "assetNote1": "",
-                        "assetNote2": "",
-                        "assetNote3": "",
-                        "assetNote4": "",
-                        "assetNote5": "",
-                        "createDate": "2021-04-25 17:32:04",
-                        "createUser": "000000(USER_000000)",
-                        "updateDate": "2021-04-25 17:43:46",
-                        "updateUser": "000000(USER_000000)",
-                        "empExt": "444",
-                        "noticeEmail": null,
-                        "assetValuation": "0",
-                        "assetAssessment": "3",
-                        "assetRisk": "0",
-                        "logId": null,
-                        "logTime": null,
-                        "logType": null,
-                        "logUser": null
+                      "id": "0206f2a4-495c-45cd-9ef9-c14141cc5ba5",
+                      "sync": "TRUE",
+                      "assetId": "",
+                      "assetEnv": null,
+                      "assetCate": null,
+                      "assetUsage": null,
+                      "networkCate": null,
+                      "ip": "10.10.10.10",
+                      "softwareAddress": "",
+                      "port": "2",
+                      "description": "",
+                      "location": "",
+                      "hostname": "",
+                      "empId": "000004(USER_000004)",
+                      "os": null,
+                      "baseGroup": "00E40101(資訊組)",
+                      "baseGroupU1": "00E40101M(資訊組主管)",
+                      "baseGroupU2": "00E401(資訊科)",
+                      "baseGroupU3": "00E4(資訊部)",
+                      "baseGroupU4": "00E(資訊處)",
+                      "changeCause": "",
+                      "manageEmpId": "",
+                      "registerDate": null,
+                      "confirmDate": "2021-04-25 17:43:46",
+                      "assetValuationC": "0",
+                      "assetValuationI": "0",
+                      "assetValuationA": "0",
+                      "assetAssessmentTl": "1",
+                      "assetAssessmentFl": "1",
+                      "assetAssessmentAl": "1",
+                      "assetNote1": "",
+                      "assetNote2": "",
+                      "assetNote3": "",
+                      "assetNote4": "",
+                      "assetNote5": "",
+                      "createDate": "2021-04-25 17:32:04",
+                      "createUser": "000000(USER_000000)",
+                      "updateDate": "2021-04-25 17:43:46",
+                      "updateUser": "000000(USER_000000)",
+                      "empExt": "444",
+                      "noticeEmail": null,
+                      "assetValuation": "0",
+                      "assetAssessment": "3",
+                      "assetRisk": "0",
+                      "logId": null,
+                      "logTime": null,
+                      "logType": null,
+                      "logUser": null,
                     },
                     {
-                        "id": "a6e396ef-aa61-40b9-b5fc-8f69669e36ca",
-                        "sync": "TRUE",
-                        "assetId": null,
-                        "assetEnv": null,
-                        "assetCate": null,
-                        "assetUsage": null,
-                        "networkCate": null,
-                        "ip": "10.10.10.10",
-                        "softwareAddress": null,
-                        "port": "1",
-                        "description": null,
-                        "location": null,
-                        "hostname": null,
-                        "empId": "000003(USER_000003)",
-                        "os": null,
-                        "baseGroup": "00E40101(資訊組)",
-                        "baseGroupU1": "00E40101M(資訊組主管)",
-                        "baseGroupU2": "00E401(資訊科)",
-                        "baseGroupU3": "00E4(資訊部)",
-                        "baseGroupU4": "00E(資訊處)",
-                        "changeCause": null,
-                        "manageEmpId": null,
-                        "registerDate": null,
-                        "confirmDate": "2021-04-25 17:43:52",
-                        "assetValuationC": "0",
-                        "assetValuationI": "0",
-                        "assetValuationA": "0",
-                        "assetAssessmentTl": "2",
-                        "assetAssessmentFl": "1",
-                        "assetAssessmentAl": "1",
-                        "assetNote1": null,
-                        "assetNote2": null,
-                        "assetNote3": null,
-                        "assetNote4": null,
-                        "assetNote5": null,
-                        "createDate": "2021-04-25 17:34:06",
-                        "createUser": "000000(USER_000000)",
-                        "updateDate": "2021-04-25 17:43:52",
-                        "updateUser": "000000(USER_000000)",
-                        "empExt": "333",
-                        "noticeEmail": null,
-                        "assetValuation": "0",
-                        "assetAssessment": "4",
-                        "assetRisk": "0",
-                        "logId": null,
-                        "logTime": null,
-                        "logType": null,
-                        "logUser": null
-                    }
-                ],
-                "nonExistCm": [
-                    {
-                        "ip": "10.211.55.2",
-                        "port": "1"
+                      "id": "a6e396ef-aa61-40b9-b5fc-8f69669e36ca",
+                      "sync": "TRUE",
+                      "assetId": null,
+                      "assetEnv": null,
+                      "assetCate": null,
+                      "assetUsage": null,
+                      "networkCate": null,
+                      "ip": "10.10.10.10",
+                      "softwareAddress": null,
+                      "port": "1",
+                      "description": null,
+                      "location": null,
+                      "hostname": null,
+                      "empId": "000003(USER_000003)",
+                      "os": null,
+                      "baseGroup": "00E40101(資訊組)",
+                      "baseGroupU1": "00E40101M(資訊組主管)",
+                      "baseGroupU2": "00E401(資訊科)",
+                      "baseGroupU3": "00E4(資訊部)",
+                      "baseGroupU4": "00E(資訊處)",
+                      "changeCause": null,
+                      "manageEmpId": null,
+                      "registerDate": null,
+                      "confirmDate": "2021-04-25 17:43:52",
+                      "assetValuationC": "0",
+                      "assetValuationI": "0",
+                      "assetValuationA": "0",
+                      "assetAssessmentTl": "2",
+                      "assetAssessmentFl": "1",
+                      "assetAssessmentAl": "1",
+                      "assetNote1": null,
+                      "assetNote2": null,
+                      "assetNote3": null,
+                      "assetNote4": null,
+                      "assetNote5": null,
+                      "createDate": "2021-04-25 17:34:06",
+                      "createUser": "000000(USER_000000)",
+                      "updateDate": "2021-04-25 17:43:52",
+                      "updateUser": "000000(USER_000000)",
+                      "empExt": "333",
+                      "noticeEmail": null,
+                      "assetValuation": "0",
+                      "assetAssessment": "4",
+                      "assetRisk": "0",
+                      "logId": null,
+                      "logTime": null,
+                      "logType": null,
+                      "logUser": null,
                     },
-                    {
-                        "ip": "10.211.55.2",
-                        "port": "2"
-                    }
-                ]
-            }
+                  ],
+                "nonExistCm":
+                  [
+                    { "ip": "10.211.55.2", "port": "1" },
+                    { "ip": "10.211.55.2", "port": "2" },
+                  ],
+              }
     GetAllGroupResExample:
       value:
         result:
@@ -658,6 +675,21 @@ components:
                   "uid": "00A401",
                   "name": "資安科",
                 },
+              ]
+    RescanSettingsExample:
+      value:
+        result:
+          status: "200"
+          datas:
+            success: true
+            returnMsg: null
+            errMsg: null
+            errCode: null
+            datas:
+              [
+                { "id": "id1", "name": "name1" },
+                { "id": "id2", "name": "name2" },
+                { "id": "id3", "name": "name3" }
               ]
   responses:
     GeneralError:
