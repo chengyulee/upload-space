@@ -105,6 +105,21 @@ paths:
                 $ref: "#/components/schemas/GeneralResponse"
               example:
                 $ref: "#/components/examples/GetCmApplyDataResExample"
+  /ticket/getScanMergeParams.json:
+    post:
+      tags:
+        - ticket
+      summary: get scan parameters
+      description: get scan parameters for substituting value
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneralResponse"
+              example:
+                $ref: "#/components/examples/ScanMergeParamsExample"
   /group/getAllGroup.json:
     post:
       tags:
@@ -498,6 +513,7 @@ components:
                   "ticketCateCode": "TICKET_CATE_ASSET_ADD",
                   "productCode": "PRODUCT_TYPE_RAPID7",
                   "workflowDescription": "add desc.",
+                  "scanId", 1,
                   "scheduleTime": "2021-05-19 17:16:48",
                   "scanName:" : "scan for ticket",
                   "policyId" : "123-123",
@@ -691,6 +707,30 @@ components:
                 { "id": "id2", "name": "name2" },
                 { "id": "id3", "name": "name3" }
               ]
+    ScanMergeParamsExample:
+      value:
+        result:
+          status: "200"
+          datas:
+            success: true
+            returnMsg: null
+            errMsg: null
+            errCode: null
+            datas:
+              [
+                {
+                    "name": "資產名稱",
+                    "value": "<<MERGE_SCAN_PARAM_TICKET_HOSTNAME>>"
+                },
+                {
+                    "name": "工單編號",
+                    "value": "<<MERGE_SCAN_PARAM_TICKET_ID>>"
+                },
+                {
+                    "name": "IP",
+                    "value": "<<MERGE_SCAN_PARAM_TICKET_IP>>"
+                }
+            ]
   responses:
     GeneralError:
       description: General Error
