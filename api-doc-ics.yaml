@@ -730,7 +730,10 @@ components:
                     "name": "Denial of service"
                   }
                 ],
-                "defaultPolicy": null,
+                "defaultPolicy": {
+                    "id": "cis",
+                    "name": "CIS"
+                  },
                 "engines": [
                   {
                     "id": "1",
