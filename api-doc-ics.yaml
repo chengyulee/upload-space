@@ -733,7 +733,7 @@ components:
                 "defaultPolicy": {
                     "id": "cis",
                     "name": "CIS"
-                  },
+                },
                 "engines": [
                   {
                     "id": "1",
