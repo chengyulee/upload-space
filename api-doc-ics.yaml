@@ -111,6 +111,8 @@ paths:
         - ticket
       summary: get scan parameters
       description: get scan parameters for substituting value
+      requestBody:
+        $ref: "#/components/requestBodies/GetScanMergeParamsBody"
       responses:
         "200":
           description: OK
@@ -425,6 +427,15 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/GetCmApplyDataBody"
+    GetScanMergeParamsBody:
+      required: false
+      content:
+        application/json:
+          schema:
+            nullable: true
+            type: integer
+            description: ticket sid
+            example: 123
 
   examples:
     TicketColumnNameResExample:
@@ -513,10 +524,11 @@ components:
                   "ticketCateCode": "TICKET_CATE_ASSET_ADD",
                   "productCode": "PRODUCT_TYPE_RAPID7",
                   "workflowDescription": "add desc.",
-                  "scanId", 1,
+                  "scanId",
+                  1,
                   "scheduleTime": "2021-05-19 17:16:48",
-                  "scanName:" : "scan for ticket",
-                  "policyId" : "123-123",
+                  "scanName:": "scan for ticket",
+                  "policyId": "123-123",
                   "policyName": "test policy name",
                 },
               ]
@@ -702,11 +714,38 @@ components:
             errMsg: null
             errCode: null
             datas:
-              [
-                { "id": "id1", "name": "name1" },
-                { "id": "id2", "name": "name2" },
-                { "id": "id3", "name": "name3" }
-              ]
+              {
+                "apiMode": true,
+                "policyDataList": [
+                  {
+                    "id": "cis",
+                    "name": "CIS"
+                  },
+                  {
+                    "id": "disa",
+                    "name": "DISA"
+                  },
+                  {
+                    "id": "dos-audit",
+                    "name": "Denial of service"
+                  }
+                ],
+                "defaultPolicy": null,
+                "engines": [
+                  {
+                    "id": "1",
+                    "name": "Rapid7 Hosted Scan Engine"
+                  },
+                  {
+                    "id": "3",
+                    "name": "Local scan engine"
+                  }
+                ],
+                "defaultEngine": {
+                  "id": "3",
+                  "name": "Local scan engine"
+                }
+              }
     ScanMergeParamsExample:
       value:
         result:
@@ -717,20 +756,23 @@ components:
             errMsg: null
             errCode: null
             datas:
-              [
-                {
-                    "name": "資產名稱",
-                    "value": "<<MERGE_SCAN_PARAM_TICKET_HOSTNAME>>"
-                },
-                {
-                    "name": "工單編號",
-                    "value": "<<MERGE_SCAN_PARAM_TICKET_ID>>"
-                },
-                {
-                    "name": "IP",
-                    "value": "<<MERGE_SCAN_PARAM_TICKET_IP>>"
-                }
-            ]
+              {
+                "policyId": "id1",
+                "scanName": "test scan name",
+                "scheduleTime": "2021-05-22 01:14:12",
+                "mergeParams":
+                  [
+                    {
+                      "name": "資產名稱",
+                      "value": "<<MERGE_SCAN_PARAM_TICKET_HOSTNAME>>",
+                    },
+                    {
+                      "name": "工單編號",
+                      "value": "<<MERGE_SCAN_PARAM_TICKET_ID>>",
+                    },
+                    { "name": "IP", "value": "<<MERGE_SCAN_PARAM_TICKET_IP>>" },
+                  ],
+              }
   responses:
     GeneralError:
       description: General Error
