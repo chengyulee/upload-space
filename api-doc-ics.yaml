@@ -122,6 +122,22 @@ paths:
                 $ref: "#/components/schemas/GeneralResponse"
               example:
                 $ref: "#/components/examples/ScanMergeParamsExample"
+  /ticket/saveScanSetting.json:
+    post:
+      tags:
+        - ticket
+      summary: schedule ticket
+      description: schedule ticket for executing
+      requestBody:
+        $ref: "#/components/requestBodies/SaveScanSettingBody"
+        example: "#/components/examples/ScanMergeParamsExample"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneralResponse"
   /group/getAllGroup.json:
     post:
       tags:
@@ -396,6 +412,30 @@ components:
           items:
             type: string
           example: ["1", "2"]
+    SaveScanSettingBody:
+      type: object
+      properties:
+        request:
+          type: object
+          description: "save scan parameters"
+          properties:
+            sids:
+              type: array
+              description: ticket sid list
+            scheduleTime:
+              type: string
+              description: fromat is 'yyyy-MM-dd HH:mm:ss', null value for immediately action
+              nullable: true
+            policyId:
+              type: string
+            policyName:
+              type: string
+            engineId:
+              type: string
+            engineName:
+              type: string
+            scanName:
+              type: string
   requestBodies:
     NullBody:
       required: false
@@ -436,6 +476,14 @@ components:
             type: integer
             description: ticket sid
             example: 123
+    SaveScanSettingBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/SaveScanSettingBody"
+          example:
+            $ref: "#/components/examples/SaveScanSettingBodyExample"
 
   examples:
     TicketColumnNameResExample:
@@ -716,38 +764,19 @@ components:
             datas:
               {
                 "apiMode": true,
-                "policyDataList": [
-                  {
-                    "id": "cis",
-                    "name": "CIS"
-                  },
-                  {
-                    "id": "disa",
-                    "name": "DISA"
-                  },
-                  {
-                    "id": "dos-audit",
-                    "name": "Denial of service"
-                  }
-                ],
-                "defaultPolicy": {
-                    "id": "cis",
-                    "name": "CIS"
-                },
-                "engines": [
-                  {
-                    "id": "1",
-                    "name": "Rapid7 Hosted Scan Engine"
-                  },
-                  {
-                    "id": "3",
-                    "name": "Local scan engine"
-                  }
-                ],
-                "defaultEngine": {
-                  "id": "3",
-                  "name": "Local scan engine"
-                }
+                "policyDataList":
+                  [
+                    { "id": "cis", "name": "CIS" },
+                    { "id": "disa", "name": "DISA" },
+                    { "id": "dos-audit", "name": "Denial of service" },
+                  ],
+                "defaultPolicy": { "id": "cis", "name": "CIS" },
+                "engines":
+                  [
+                    { "id": "1", "name": "Rapid7 Hosted Scan Engine" },
+                    { "id": "3", "name": "Local scan engine" },
+                  ],
+                "defaultEngine": { "id": "3", "name": "Local scan engine" },
               }
     ScanMergeParamsExample:
       value:
@@ -761,8 +790,11 @@ components:
             datas:
               {
                 "policyId": "id1",
+                "policyName": "name1",
+                "engineId": "3",
+                "engineName": "Local scan engine",
                 "scanName": "test scan name",
-                "scheduleTime": "2021-05-22 01:14:12",
+                "scheduleTime": "2021-07-22 01:14:12",
                 "mergeParams":
                   [
                     {
@@ -776,6 +808,18 @@ components:
                     { "name": "IP", "value": "<<MERGE_SCAN_PARAM_TICKET_IP>>" },
                   ],
               }
+    SaveScanSettingBodyExample:
+      value:
+        {
+          "sids": [1, 2],
+          "scheduleTime": "2021-06-15 12:00:00",
+          "policyId": "p-id-1",
+          "policyName": "p-name-1",
+          "engineId": "e-id-1",
+          "engineName": "e-name-1",
+          "scanName": "<<MERGE_SCAN_PARAM_TICKET_HOSTNAME>>-<<MERGE_SCAN_PARAM_TICKET_IP>>",
+        }
+
   responses:
     GeneralError:
       description: General Error
