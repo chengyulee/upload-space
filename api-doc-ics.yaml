@@ -122,14 +122,14 @@ paths:
                 $ref: "#/components/schemas/GeneralResponse"
               example:
                 $ref: "#/components/examples/ScanMergeParamsExample"
-  /ticket/saveScanSetting.json:
+  /ticket/ScheduleTicket.json:
     post:
       tags:
         - ticket
       summary: schedule ticket
       description: schedule ticket for executing
       requestBody:
-        $ref: "#/components/requestBodies/SaveScanSettingBody"
+        $ref: "#/components/requestBodies/ScheduleTicketBody"
         example: "#/components/examples/ScanMergeParamsExample"
       responses:
         "200":
@@ -412,7 +412,7 @@ components:
           items:
             type: string
           example: ["1", "2"]
-    SaveScanSettingBody:
+    ScheduleTicketBody:
       type: object
       properties:
         request:
@@ -422,20 +422,28 @@ components:
             sids:
               type: array
               description: ticket sid list
+            withScan:
+              type: boolean
+              description: scan if true
             scheduleTime:
               type: string
               description: fromat is 'yyyy-MM-dd HH:mm:ss', null value for immediately action
               nullable: true
             policyId:
               type: string
+              nullable: true
             policyName:
               type: string
+              nullable: true
             engineId:
               type: string
+              nullable: true
             engineName:
               type: string
+              nullable: true
             scanName:
               type: string
+              nullable: true
   requestBodies:
     NullBody:
       required: false
@@ -476,14 +484,14 @@ components:
             type: integer
             description: ticket sid
             example: 123
-    SaveScanSettingBody:
+    ScheduleTicketBody:
       required: true
       content:
         multipart/form-data:
           schema:
-            $ref: "#/components/schemas/SaveScanSettingBody"
+            $ref: "#/components/schemas/ScheduleTicketBody"
           example:
-            $ref: "#/components/examples/SaveScanSettingBodyExample"
+            $ref: "#/components/examples/ScheduleTicketBodyExample"
 
   examples:
     TicketColumnNameResExample:
@@ -808,10 +816,11 @@ components:
                     { "name": "IP", "value": "<<MERGE_SCAN_PARAM_TICKET_IP>>" },
                   ],
               }
-    SaveScanSettingBodyExample:
+    ScheduleTicketBodyExample:
       value:
         {
           "sids": [1, 2],
+          "withScan": true,
           "scheduleTime": "2021-06-15 12:00:00",
           "policyId": "p-id-1",
           "policyName": "p-name-1",
