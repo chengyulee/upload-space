@@ -122,7 +122,7 @@ paths:
                 $ref: "#/components/schemas/GeneralResponse"
               example:
                 $ref: "#/components/examples/ScanMergeParamsExample"
-  /ticket/ScheduleTicket.json:
+  /ticket/scheduleTicket.json:
     post:
       tags:
         - ticket
