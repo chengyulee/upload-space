@@ -819,7 +819,7 @@ components:
     ScheduleTicketBodyExample:
       value:
         {
-          "sids": [1, 2],
+          "ids": [1, 2],
           "withScan": true,
           "scheduleTime": "2021-06-15 12:00:00",
           "policyId": "p-id-1",
