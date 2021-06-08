@@ -280,6 +280,9 @@ components:
           type: object
           description: "ticket parameters"
           properties:
+            editTicketId:
+              type: string
+              description: set this value if edit not open and ticket status must equal to TICKET_STATUS_RETURN or TICKET_STATUS_CHECK_REJECT
             ticketCate:
               type: string
               enum:
