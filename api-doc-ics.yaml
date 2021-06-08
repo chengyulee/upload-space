@@ -419,7 +419,7 @@ components:
           type: object
           description: "save scan parameters"
           properties:
-            sids:
+            ids:
               type: array
               description: ticket sid list
             withScan:
